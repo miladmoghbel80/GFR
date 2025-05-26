@@ -94,6 +94,14 @@
     .stage-5 { background-color: #f44336; color: white; }
   </style>
 </head>
+  <script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js")
+      .then(() => console.log("Service Worker Registered"))
+      .catch(err => console.error("SW registration failed:", err));
+  }
+</script>
+
 <body>
 
   <h2>انتخاب فرمول محاسبه GFR:</h2>
