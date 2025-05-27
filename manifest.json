@@ -4,7 +4,7 @@
   "description": "اپلیکیشن محاسبه gfr کلیه (GFR)",
   "id": "/",
   "start_url": "index.html",
-  "display": "standalone",
+  "display": "fullscreen",
   "orientation": "portrait",
   "theme_color": "#f3e5f5",
   "background_color": "#ffffff",
