@@ -233,42 +233,29 @@ h1, h2, h3, h4, h5, h6, p, span, div, label, input, button {
     }
 
 function showGFR(gfr) {
-  const stage = gfr >= 90 ? 1 :
-                gfr >= 60 ? 2 :
-                gfr >= 30 ? 3 :
-                gfr >= 15 ? 4 : 5;
-
+  const stage = gfr >= 90 ? 1 : gfr >= 60 ? 2 : gfr >= 30 ? 3 : gfr >= 15 ? 4 : 5;
   const stageClass = `stage-${stage}`;
-
-  const stageTitles = [
-    "مرحله 5",
-    "مرحله 4",
-    "مرحله 3",
-    "مرحله 2",
-    "مرحله 1"
+  
+  const stageTexts = [
+    "مرحله 5 (نارسایی شدید کلیه)",
+    "مرحله 4 (افت شدید عملکرد کلیه)",
+    "مرحله 3 (افت متوسط عملکرد کلیه)",
+    "مرحله 2 (افت خفیف عملکرد کلیه)",
+    "مرحله 1 (عملکرد طبیعی کلیه)"
   ];
-
-  const stageDescriptions = [
-    "نارسایی کلیه",
-    "افت شدید عملکرد کلیه",
-    "افت متوسط عملکرد کلیه",
-    "افت خفیف عملکرد کلیه",
-    "عملکرد طبیعی کلیه"
-  ];
-
-  const title = stageTitles[5 - stage];
-  const description = stageDescriptions[5 - stage];
-
+  
+  const stageText = stageTexts[5 - stage];
+  
   const resDiv = document.getElementById("result");
   resDiv.className = `result ${stageClass}`;
   resDiv.style.display = "block";
   resDiv.innerHTML = `
-    <span style="font-size: 1.8em;">GFR = ${gfr.toFixed(1)}</span>
+    <span style="font-size: 1.8em;">GFR = ${gfr.toFixed(1)}</span> 
     <span style="font-size: 1em;">ml/min/1.73m²</span><br>
-    <span style="font-size: 1.5em;">${title}</span><br>
-    <span style="font-size: 1.2em; color: white;">(${description})</span>
+    <span style="font-family: 'IRANYekan', sans-serif; color: white; font-size: 1.1em;">${stageText}</span>
   `;
 }
+
 
 
     function calcMDRD() {
