@@ -378,6 +378,22 @@ function showGFR(gfr) {
       let gfr = (0.413 * height) / cr;
       showGFR(gfr);
     }
+function toggleMenu() {
+  var dropdown = document.getElementById("dropdown");
+  if (dropdown.style.display === "block") {
+    dropdown.style.display = "none";
+  } else {
+    dropdown.style.display = "block";
+  }
+}
+
+document.addEventListener("click", function(event) {
+  var dropdown = document.getElementById("dropdown");
+  var hamburger = document.querySelector(".hamburger");
+  if (!dropdown.contains(event.target) && !hamburger.contains(event.target)) {
+    dropdown.style.display = "none";
+  }
+});
 
     window.onload = () => selectFormula('ckd');
   </script>
