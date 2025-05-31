@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>محاسبه BMI</title>
+  <link rel="manifest" href="manifest.json" />
+
+  <style>
+    html {
+      font-size: 26px;
+    }
+
+    body {
+      font-size: 1rem;
+    }
+
+    h1, h2, h3, h4, h5, h6, p, span, div, label, input, button {
+      font-size: 1.1em;
+    }
+
+    @media (max-width: 600px) {
+      html {
+        font-size: 22px;
+      }
+    }
+
+    @media (min-width: 601px) {
+      html {
+        font-size: 28px;
+      }
+    }
+
+    @font-face {
+      font-family: 'BMitra';
+      src: url('BMitra.ttf') format('truetype');
+    }
+
+    @font-face {
+      font-family: 'IRANYekan';
+      src: url('IRANYekan.ttf') format('truetype');
+    }
+
+    body {
+      background-color: #fff;
+      color: #4A148C;
+      font-family: "BMitra", sans-serif;
+      direction: rtl;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 1.5em;
+      font-family: 'IRANYekan', sans-serif;
+      color: #6A1B9A;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-size: 1em;
+      font-family: 'IRANYekan', sans-serif;
+      color: #6A1B9A;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      font-size: 1em;
+      border-radius: 5px;
+      border: 1px solid #BA68C8;
+      background-color: #f3e5f5;
+      color: #4A148C;
+      font-family: 'IRANYekan', sans-serif;
+    }
+
+    button.calc {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background: #AB47BC;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 1.1em;
+      cursor: pointer;
+      font-family: 'IRANYekan', sans-serif;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 1.4em;
+      font-weight: bold;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      color: white;
+      background-color: #6A1B9A;
+      font-family: 'IRANYekan', sans-serif;
+    }
+
+    .back-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      font-size: 2em;
+      background: none;
+      border: none;
+      color: #6A1B9A;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- دکمه برگشت -->
+  <button class="back-button" onclick="window.location.href='index.html'">&#8592;</button>
+
+  <div class="container">
+    <h2>محاسبه شاخص توده بدنی (BMI)</h2>
+
+    <label>وزن (کیلوگرم):</label>
+    <input type="number" id="weight" placeholder="مثلاً ۷۰">
+
+    <label>قد (سانتی‌متر):</label>
+    <input type="number" id="height" placeholder="مثلاً ۱۷۵">
+
+    <button class="calc" onclick="calcBMI()">محاسبه</button>
+
+    <div id="result" class="result" style="display: none;"></div>
+  </div>
+
+  <script>
+    function calcBMI() {
+      const weight = parseFloat(document.getElementById("weight").value);
+      const height = parseFloat(document.getElementById("height").value);
+
+      if (isNaN(weight) || isNaN(height) || height === 0) {
+        alert("لطفاً مقادیر معتبر وارد کنید.");
+        return;
+      }
+
+      const heightMeters = height / 100;
+      const bmi = weight / (heightMeters * heightMeters);
+      const result = document.getElementById("result");
+      let status = "";
+
+      if (bmi < 18.5) status = "کم‌وزن";
+      else if (bmi < 25) status = "وزن نرمال";
+      else if (bmi < 30) status = "اضافه‌وزن";
+      else status = "چاق";
+
+      result.style.display = "block";
+      result.innerHTML = `
+        <span style="font-size: 1.8em;">BMI = ${bmi.toFixed(1)}</span><br>
+        <span style="font-family: 'IRANYekan', sans-serif; font-size: 1.1em;">وضعیت: ${status}</span>
+      `;
+    }
+  </script>
+</body>
+</html>
