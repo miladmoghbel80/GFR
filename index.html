@@ -28,6 +28,7 @@
       direction: rtl;
       margin: 0;
       padding: 0;
+      overflow-x: hidden;
     }
 
     .container {
@@ -135,44 +136,61 @@
     .stage-4 { background-color: #ff9800; color: black; }
     .stage-5 { background-color: #f44336; }
 
-    .menu-wrapper {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      z-index: 1000;
+    /* 🔥 Drawer-style menu */
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: -250px;
+      width: 250px;
+      height: 100%;
+      background-color: #f3e5f5;
+      box-shadow: -3px 0 10px rgba(0,0,0,0.2);
+      transition: right 0.3s ease-in-out;
+      padding-top: 60px;
+      z-index: 9999;
+    }
+
+    .drawer.open {
+      right: 0;
+    }
+
+    .drawer a {
+      display: block;
+      padding: 15px 20px;
+      text-decoration: none;
+      color: #4A148C;
+      font-family: 'IRANYekan', sans-serif;
+      font-size: 1em;
+    }
+
+    .drawer a:hover {
+      background-color: #e1bee7;
     }
 
     .hamburger {
+      position: fixed;
+      top: 15px;
+      right: 20px;
       font-size: 2em;
       cursor: pointer;
+      z-index: 10000;
       color: #6A1B9A;
       user-select: none;
     }
 
-    .dropdown-content {
+    .overlay {
       display: none;
-      position: absolute;
-      top: 40px;
+      position: fixed;
+      top: 0;
       right: 0;
-      background-color: #f3e5f5;
-      min-width: 160px;
-      box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
-      border-radius: 10px;
-      overflow: hidden;
-      z-index: 1001;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.3);
+      z-index: 9998;
     }
 
-    .dropdown-content a {
-      color: #4A148C;
-      padding: 12px 16px;
-      text-decoration: none;
+    .overlay.show {
       display: block;
-      font-family: 'IRANYekan', sans-serif;
-      font-size: 0.9em;
-    }
-
-    .dropdown-content a:hover {
-      background-color: #e1bee7;
     }
   </style>
 </head>
@@ -184,14 +202,21 @@
         .catch(err => console.error("SW registration failed:", err));
     }
   </script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js")
+        .then(() => console.log("Service Worker Registered"))
+        .catch(err => console.error("SW registration failed:", err));
+    }
+  </script>
 
-  <!-- منوی کشویی -->
-  <div class="menu-wrapper">
-    <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
-    <div id="dropdown" class="dropdown-content">
-      <a href="bmi.html">محاسبه BMI</a>
-    </div>
+  <!-- 🔥 منوی کشویی مدرن -->
+  <div class="hamburger" onclick="toggleDrawer()">☰</div>
+  <div class="drawer" id="drawer">
+    <a href="bmi.html">محاسبه BMI</a>
+    <!-- می‌تونی گزینه‌های دیگه هم اضافه کنی -->
   </div>
+  <div class="overlay" id="overlay" onclick="toggleDrawer()"></div>
 
   <div class="container">
     <h2>فرمول محاسبه GFR:</h2>
@@ -333,6 +358,13 @@
       }
     });
 
+    function toggleDrawer() {
+      const drawer = document.getElementById('drawer');
+      const overlay = document.getElementById('overlay');
+      drawer.classList.toggle('open');
+      overlay.classList.toggle('show');
+    }
+  
     window.onload = () => selectFormula('ckd');
   </script>
 </body>
