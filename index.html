@@ -57,9 +57,86 @@
     .buttons a:hover {
       background-color: #8E24AA;
     }
+    
+  .drawer {
+    position: fixed;
+    top: 0;
+    right: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #f3e5f5;
+    box-shadow: -3px 0 10px rgba(0,0,0,0.2);
+    transition: right 0.3s ease-in-out;
+    padding-top: 60px;
+    z-index: 9999;
+  }
+
+  .drawer.open {
+    right: 0;
+  }
+
+  .drawer a {
+    display: block;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #4A148C;
+    font-family: 'IRANYekan', sans-serif;
+    font-size: 1em;
+  }
+
+  .drawer a:hover {
+    background-color: #e1bee7;
+  }
+
+  .hamburger {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    font-size: 2em;
+    cursor: pointer;
+    z-index: 10000;
+    color: #6A1B9A;
+    user-select: none;
+  }
+
+  .overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.3);
+    z-index: 9998;
+  }
+
+  .overlay.show {
+    display: block;
+  }
+
+  .menu-label {
+    font-family: 'IRANYekan', sans-serif;
+    font-size: 0.9em;
+    margin-right: 8px;
+    vertical-align: middle;
+    display: inline;
+  }
+
   </style>
 </head>
 <body>
+  <div class="hamburger" onclick="toggleDrawer()">
+  ☰ <span class="menu-label" id="menuLabel">منو</span>
+</div>
+
+<div class="overlay" id="overlay" onclick="toggleDrawer()"></div>
+
+<div class="drawer" id="drawer">
+  <a href="index.html">🏠 صفحه اصلی</a>
+  <a href="bmi.html">📏 محاسبه BMI</a>
+  <a href="gfr.html">🧪 محاسبه GFR</a>
+</div>
+
   <h1>نرم‌افزار محاسبات پزشکی و آزمایشگاه</h1>
 
   <div class="buttons">
@@ -68,11 +145,30 @@
   </div>
 
   <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("service-worker.js")
-        .then(() => console.log("Service Worker Registered"))
-        .catch(err => console.error("SW registration failed:", err));
-    }
+    
+  function toggleDrawer() {
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('overlay');
+    const menuLabel = document.getElementById('menuLabel');
+
+    const isOpen = drawer.classList.contains('open');
+
+    drawer.classList.toggle('open');
+    overlay.classList.toggle('show');
+
+    // در صورت نیاز به پنهان/نمایش متن "منو"
+    menuLabel.style.display = isOpen ? 'inline' : 'none';
+
+  }
+
+  // Service Worker
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register('./service-worker.js')
+
+      .then(() => console.log("Service Worker Registered"))
+      .catch(err => console.error("SW registration failed:", err));
+  }
+
   </script>
 </body>
 </html>
