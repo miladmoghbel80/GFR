@@ -11,9 +11,14 @@
     @media (max-width: 600px) { html { font-size: 22px; } }
     @media (min-width: 601px) { html { font-size: 28px; } }
     @media (max-width: 600px) {
-  .menu-label {
-    display: none;
-  }
+.menu-label {
+  font-family: 'IRANYekan', sans-serif;
+  font-size: 0.9em;
+  margin-right: 8px;
+  vertical-align: middle;
+  display: none; /* 👈 اضافه شود */
+}
+
 }
 
 
@@ -225,8 +230,9 @@
 
   <!-- 🔥 منوی کشویی مدرن -->
   <div class="hamburger" onclick="toggleDrawer()">
-  ☰ <span class="menu-label">منو</span>
+  ☰ <span class="menu-label" id="menuLabel">منو</span>
 </div>
+
 
   <div class="overlay" id="overlay" onclick="toggleDrawer()"></div>
 
@@ -377,11 +383,22 @@
     });
 
     function toggleDrawer() {
-      const drawer = document.getElementById('drawer');
-      const overlay = document.getElementById('overlay');
-      drawer.classList.toggle('open');
-      overlay.classList.toggle('show');
-    }
+  const drawer = document.getElementById('drawer');
+  const overlay = document.getElementById('overlay');
+  const menuLabel = document.getElementById('menuLabel');
+
+  const isOpen = drawer.classList.contains('open');
+  
+  drawer.classList.toggle('open');
+  overlay.classList.toggle('show');
+
+  if (isOpen) {
+    menuLabel.style.display = 'none';
+  } else {
+    menuLabel.style.display = 'inline';
+  }
+}
+
   
     window.onload = () => selectFormula('ckd');
   </script>
